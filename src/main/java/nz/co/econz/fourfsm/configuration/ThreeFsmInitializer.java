@@ -24,15 +24,15 @@ public class ThreeFsmInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext)
             throws ServletException {
         // Create the root appcontext
-        AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-        rootContext.setServletContext(servletContext);
-        rootContext.register(RootConfig.class);
+        AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+        ctx.setServletContext(servletContext);
+        ctx.register(RootConfig.class);
         // since we registered RootConfig instead of passing it to the
         // constructor
-        rootContext.refresh();
+        ctx.refresh();
 
         // Manage the lifecycle of the root appcontext
-        servletContext.addListener(new ContextLoaderListener(rootContext));
+        servletContext.addListener(new ContextLoaderListener(ctx));
         servletContext.setInitParameter("defaultHtmlEscape", "true");
 
         FilterRegistration.Dynamic fr = servletContext.addFilter(
@@ -55,7 +55,7 @@ public class ThreeFsmInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic appServlet = servletContext.addServlet(
                 "appServlet", new DispatcherServlet(mvcContext));
         appServlet.setLoadOnStartup(1);
-        Set<String> mappingConflicts = appServlet.addMapping("/*");
+        Set<String> mappingConflicts = appServlet.addMapping("/");
 
         if (!mappingConflicts.isEmpty()) {
             for (String s : mappingConflicts) {

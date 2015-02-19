@@ -5,9 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan(basePackages = {
-        "nz.co.econz.fourfsm.configuration",
-        "nz.co.econz.fourfsm.service", 
-        "nz.co.econz.fourfsm.web"})
+        "nz.co.econz.fourfsm.configuration"})
 public class RootConfig {
 
 }
